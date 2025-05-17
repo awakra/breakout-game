@@ -18,10 +18,10 @@ BALL_RADIUS = 10
 BALL_SPEED = 500
 
 # Bricks 
-BRICK_WIDTH = 80          
-BRICK_HEIGHT = 30        
-BRICK_PADDING = 5         
-BRICK_OFFSET_TOP = 60     
+BRICK_WIDTH = 139   # Pixels
+BRICK_HEIGHT = 40   # Pixels    
+BRICK_PADDING = 5   # Pixels      
+BRICK_OFFSET_TOP = 60  # Pixels     
 BRICK_ROWS = 5            
 BRICK_COLS = 12           
 

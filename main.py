@@ -18,11 +18,15 @@ bricks_group = pygame.sprite.Group()
 paddle = Paddle()
 all_sprites.add(paddle)
 
+# Calculate total width of bricks and padding to center them
+total_width = (BRICK_WIDTH * BRICK_COLS) + (BRICK_PADDING * (BRICK_COLS - 1))
+start_x = (SCREEN_WIDTH - total_width) / 2  # Starting x position for centering
+
 for row in range(BRICK_ROWS):
+    y = row * (BRICK_HEIGHT + BRICK_PADDING) + BRICK_OFFSET_TOP
+    color = BRICK_COLORS[row % len(BRICK_COLORS)]
     for col in range(BRICK_COLS):
-        x = col * (BRICK_WIDTH + BRICK_PADDING) + BRICK_PADDING
-        y = row * (BRICK_HEIGHT + BRICK_PADDING) + BRICK_OFFSET_TOP
-        color = BRICK_COLORS[row % len(BRICK_COLORS)]
+        x = start_x + col * (BRICK_WIDTH + BRICK_PADDING)
         brick = Brick(x, y, color)
         bricks_group.add(brick)
         all_sprites.add(brick)

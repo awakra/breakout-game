@@ -21,6 +21,7 @@ class CollisionManager:
 
         # Ball out of bottom screen (missed paddle)
         if self.ball.rect.top > SCREEN_HEIGHT:
-            self.ball.reset()
+            self.ball.reset(self.paddle)
+            return []
 
         return hit_blocks

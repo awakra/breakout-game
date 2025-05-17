@@ -1,17 +1,8 @@
 import pygame
-from constants import WHITE
+from constants import *
 
-class Metrics:
-    def __init__(self, screen, font_size=24, position=(10, 10), color=WHITE):
-        """
-        Initializes the Metrics object.
-
-        Args:
-            screen (pygame.Surface): The surface on which the metrics will be displayed.
-            font_size (int, optional): The size of the font for displaying metrics. Defaults to 24.
-            position (tuple, optional): The (x, y) position where the metrics will be displayed. Defaults to (10, 10).
-            color (tuple, optional): The color of the text, represented as an RGB tuple. Defaults to WHITE.
-        """
+class FrameRate:
+    def __init__(self, screen, font_size=FONT_SIZE, position=(10, 10), color=WHITE):
         self.screen = screen
         self.position = position
         self.color = color
@@ -19,36 +10,61 @@ class Metrics:
         self.clock = pygame.time.Clock()
 
     def tick(self, fps_limit):
-        """
-        Regulates the frame rate of the game loop and calculates the time delta.
-
-        Args:
-            fps_limit (int): The maximum frames per second to limit the game loop.
-
-        Returns:
-            float: The time delta (dt) in seconds since the last frame.
-        """
         dt = self.clock.tick(fps_limit) / 1000
         return dt
 
-    def draw_fps(self):
-        """
-        Draws the current frames per second (FPS) on the screen.
-
-        This method retrieves the current FPS from the clock object, renders it
-        as a text surface using the specified font and color, and blits it onto
-        the screen at the specified position.
-
-        Attributes:
-            self.clock (pygame.time.Clock): The clock object used to track FPS.
-            self.font (pygame.font.Font): The font object used to render the FPS text.
-            self.color (tuple): The color of the FPS text, specified as an RGB tuple.
-            self.screen (pygame.Surface): The surface on which the FPS text is drawn.
-            self.position (tuple): The (x, y) position where the FPS text is displayed.
-
-        Returns:
-            None
-        """
+    def draw(self):
         fps = self.clock.get_fps()
         fps_text = self.font.render(f"FPS: {fps:.2f}", True, self.color)
         self.screen.blit(fps_text, self.position)
+        
+class Scoreboard:
+    def __init__(self, screen, font_size=FONT_SIZE, position=(SCREEN_WIDTH / 2, 10), color=WHITE):
+        self.screen = screen
+        self.position = position
+        self.color = color
+        self.font = pygame.font.Font(None, font_size)
+        self.score = 0
+
+    def add_points(self, points):
+        self.score += points
+
+    def reset(self):
+        self.score = 0
+
+    def draw(self):
+        score_text = self.font.render(f"Score: {self.score}", True, self.color)
+        self.screen.blit(score_text, self.position)
+
+class Lives:
+    def __init__(self, screen, initial_lives=INITIAL_LIVES, font_size=FONT_SIZE, position=(SCREEN_WIDTH - 125, 10), color=WHITE):
+        self.screen = screen
+        self.lives = initial_lives
+        self.position = position
+        self.color = color
+        self.font = pygame.font.Font(None, font_size)
+
+    def lose_life(self):
+        self.lives -= 1
+
+    def reset(self, value=INITIAL_LIVES):
+        self.lives = value
+
+    def draw(self):
+        lives_text = self.font.render(f"Lives: {self.lives}", True, self.color)
+        self.screen.blit(lives_text, self.position)
+
+    def is_game_over(self):
+        return self.lives <= 0
+
+    def draw_game_over(self, score, show_retry=False):
+        font = pygame.font.Font(None, 100)
+        game_over_text = font.render("GAME OVER", True, (255, 0, 0))
+        score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+        self.screen.blit(game_over_text, (SCREEN_WIDTH // 2 - game_over_text.get_width() // 2, SCREEN_HEIGHT // 2 - 100))
+        self.screen.blit(score_text, (SCREEN_WIDTH // 2 - score_text.get_width() // 2, SCREEN_HEIGHT // 2))
+        if show_retry:
+            retry_font = pygame.font.Font(None, 50)
+            retry_text = retry_font.render("Press R to Retry", True, (255, 255, 255))
+            self.screen.blit(retry_text, (SCREEN_WIDTH // 2 - retry_text.get_width() // 2, SCREEN_HEIGHT // 2 + 100))
+        pygame.display.flip()

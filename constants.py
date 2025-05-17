@@ -31,3 +31,7 @@ BRICK_COLORS = [
     (0, 255, 0),      # Green
     (0, 0, 255)       # Blue
 ]
+
+# Metrics
+INITIAL_LIVES = 3
+FONT_SIZE = 30

@@ -17,7 +17,7 @@ all_sprites.add(paddle)
 
 running = True
 while running:
-    # Sets maximum framerate to constant.py FPS and gets delta time
+    # Set maximum framerate to constant.py FPS and get delta time
     dt = metrics.tick(FPS)
     
     for event in pygame.event.get():

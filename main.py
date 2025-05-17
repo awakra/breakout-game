@@ -3,6 +3,7 @@ import sys
 from constants import *
 from metrics import Metrics
 from sprites.paddle import Paddle
+from sprites.brick import Brick
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -11,30 +12,38 @@ metrics = Metrics(screen)
 
 font = pygame.font.Font(None, 30)
 
-paddle = Paddle()
 all_sprites = pygame.sprite.Group()
+bricks_group = pygame.sprite.Group()
+
+paddle = Paddle()
 all_sprites.add(paddle)
+
+for row in range(BRICK_ROWS):
+    for col in range(BRICK_COLS):
+        x = col * (BRICK_WIDTH + BRICK_PADDING) + BRICK_PADDING
+        y = row * (BRICK_HEIGHT + BRICK_PADDING) + BRICK_OFFSET_TOP
+        color = BRICK_COLORS[row % len(BRICK_COLORS)]
+        brick = Brick(x, y, color)
+        bricks_group.add(brick)
+        all_sprites.add(brick)
 
 running = True
 while running:
     # Set maximum framerate to constant.py FPS and get delta time
     dt = metrics.tick(FPS)
-    
+
     for event in pygame.event.get():
-    
         if event.type == pygame.QUIT:
             running = False
-            
+
     keys = pygame.key.get_pressed()
-    all_sprites.update(keys, dt) 
-            
+    all_sprites.update(keys, dt)
     screen.fill(BLACK)
+    all_sprites.draw(screen)
 
     metrics.draw_fps()  # Draw FPS in the top left corner of the screen
-    
-    all_sprites.draw(screen)
+
     pygame.display.flip()
 
 pygame.quit()
 sys.exit()
-# Exit the program

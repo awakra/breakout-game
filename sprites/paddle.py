@@ -1,13 +1,13 @@
 import pygame
-from constants import *
+from constants import SCREEN_WIDTH, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_SPEED, BLUE, SCREEN_HEIGHT
 
 class Paddle(pygame.sprite.Sprite):
     def __init__(self):
-        super().__init__()  # Initialize base Sprite class
-        self.image = pygame.Surface((PADDLE_WIDTH, PADDLE_HEIGHT))  # Creates paddle image
-        self.image.fill(BLUE)  # Defines paddle color
-        self.rect = self.image.get_rect()  # Gets rectangle for positioning
-        self.rect.midbottom = (SCREEN_WIDTH // 2, SCREEN_HEIGHT )  # Starting position
+        super().__init__()
+        self.image = pygame.Surface((PADDLE_WIDTH, PADDLE_HEIGHT))
+        self.image.fill(BLUE)
+        self.rect = self.image.get_rect()
+        self.rect.midbottom = (SCREEN_WIDTH // 2, SCREEN_HEIGHT - 40)
         self.speed = PADDLE_SPEED
         self.pos_x = float(self.rect.x)
 

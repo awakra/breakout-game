@@ -21,6 +21,7 @@ A classic Breakout/Arkanoid-style game built with Python and Pygame.
 
 ## Project Structure
 
+```
 .
 ├── main.py
 ├── metrics.py
@@ -32,6 +33,7 @@ A classic Breakout/Arkanoid-style game built with Python and Pygame.
 │   ├── brick.py
 │   └── ball.py
 ├── README.md
+```
 
 
 - `main.py`: Main game loop and initialization
